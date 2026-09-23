@@ -47,6 +47,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jtProductos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jDesktopPane1.setBackground(new java.awt.Color(204, 204, 204));
         jDesktopPane1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -63,7 +64,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lblCategoria.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCategoria.setText("Categoria:");
 
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comestible", "Limpieza", "Farmacia", "Ropa", "Perfumeria" }));
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una categoria", "Comestible", "Limpieza", "Farmacia", "Ropa", "Perfumeria" }));
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/compra3.png"))); // NOI18N
         btnAgregar.setText("Agregar");
@@ -74,12 +75,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -87,8 +84,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombre)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombre))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
@@ -189,23 +190,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
       try{
-            String categoria = (String) cbCategoria.getSelectedItem();
-            String nombre = txtNombre.getText();
-            Double precio = Double.parseDouble(txtPrecio.getText());
-            Producto product = new Producto (nombre,categoria,precio);
-
-            if(nombre.isEmpty()||txtPrecio.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this,"Complete todos los campos");
-            return;
+            String nombre = txtNombre.getText().trim();
+            String precioTexto = txtPrecio.getText().trim();
+            String categoria = (String) cbCategoria.getSelectedItem();  
+          
+            if (nombre.isEmpty() || precioTexto.isEmpty() || categoria == "Seleccione una categoria"){
+                JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos");
+                return;
             }
+           
+            Double precio = Double.parseDouble(precioTexto);
+            Producto product = new Producto (nombre,categoria,precio);
             agregarProductos(product);
+            
             cbCategoria.setSelectedIndex(-1);
             txtNombre.setText("");
             txtPrecio.setText("");
             txtNombre.requestFocus();
             
       }catch(NumberFormatException nf){
-          JOptionPane.showMessageDialog(this,"Debe colocar un número");
+          JOptionPane.showMessageDialog(this,"Debe colocar un número en el campo 'Precio'");
       }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
