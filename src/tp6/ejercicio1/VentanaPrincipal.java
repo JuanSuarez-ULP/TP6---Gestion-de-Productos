@@ -63,7 +63,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lblCategoria.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCategoria.setText("Categoria:");
 
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comestible", "Limpieza", "Farmacia", "Ropa", "Perfumeria" }));
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/compra3.png"))); // NOI18N
         btnAgregar.setText("Agregar");
